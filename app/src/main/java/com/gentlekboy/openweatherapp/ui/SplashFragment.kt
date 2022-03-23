@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.gentlekboy.openweatherapp.R
 import com.gentlekboy.openweatherapp.databinding.FragmentSplashBinding
 
 class SplashFragment : Fragment() {
@@ -26,7 +28,7 @@ class SplashFragment : Fragment() {
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-
+            findNavController().navigate(R.id.action_splashFragment_to_dashboardFragment)
         }, 3000L)
     }
 
