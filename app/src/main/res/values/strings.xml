@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Open Weather App</string>
+    <string name="open_weather_home">Open Weather Home</string>
+    <string name="wednesday_march_20_2022">Wednesday, March 20, 2022</string>
+    <string name="_3_30pm">3:30PM</string>
+    <string name="weather_icon">weather icon</string>
+    <string name="_68f">68F</string>
+    <string name="ikeja_ng">Ikeja, NG</string>
+    <string name="feels_cloudy">Feels Cloudy</string>
+    <string name="top_cities">Top Cities</string>
+    <string name="get_forecast_for_current_location">Get Forecast For Current Location</string>
 </resources>
