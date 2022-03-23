@@ -1,7 +1,8 @@
-package com.gentlekboy.openweatherapp
+package com.gentlekboy.openweatherapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.gentlekboy.openweatherapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
