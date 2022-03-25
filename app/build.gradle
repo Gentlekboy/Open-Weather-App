@@ -18,6 +18,11 @@ android {
         versionName "1.0"
         archivesBaseName = "$versionName"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            ndkBuild {
+                cppFlags ''
+            }
+        }
     }
 
     buildFeatures {
@@ -44,6 +49,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
+        }
     }
 }
 

@@ -11,17 +11,22 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    init {
+        System.loadLibrary("api-keys")
+    }
+
     private val openWeatherViewModel: OpenWeatherViewModel by viewModels()
+    private external fun getKeys(): String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        openWeatherViewModel.getWeatherByCityName("Lagos", "API_KEY_HERE")
+        openWeatherViewModel.getWeatherByCityName("Lagos", getKeys())
         openWeatherViewModel.getWeatherByCoordinates(
             41.3888,
             2.159,
-            "API_KEY_HERE"
+            getKeys()
         )
 
         openWeatherViewModel.cityWeather.observe(this) { response ->
