@@ -1,11 +1,11 @@
-package com.gentlekboy.openweatherapp.data.model.coordinates
+package com.gentlekboy.openweatherapp.data.model.coordinatesresponse
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Hourly(
+data class Current(
     @Json(name = "clouds")
     var clouds: Int,
     @Json(name = "dew_point")
@@ -18,6 +18,10 @@ data class Hourly(
     var humidity: Int,
     @Json(name = "pressure")
     var pressure: Int,
+    @Json(name = "sunrise")
+    var sunrise: Int,
+    @Json(name = "sunset")
+    var sunset: Int,
     @Json(name = "temp")
     var temp: Double,
     @Json(name = "uvi")
@@ -25,11 +29,9 @@ data class Hourly(
     @Json(name = "visibility")
     var visibility: Int,
     @Json(name = "weather")
-    var weather: List<WeatherX>,
+    var weather: List<Weather>,
     @Json(name = "wind_deg")
     var windDeg: Int,
-    @Json(name = "wind_gust")
-    var windGust: Double,
     @Json(name = "wind_speed")
     var windSpeed: Double
 )
