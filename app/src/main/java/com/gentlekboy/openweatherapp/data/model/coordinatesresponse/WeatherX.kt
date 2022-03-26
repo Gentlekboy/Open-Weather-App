@@ -1,11 +1,11 @@
-package com.gentlekboy.openweatherapp.data.model.coordinates
+package com.gentlekboy.openweatherapp.data.model.coordinatesresponse
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Weather(
+data class WeatherX(
     @Json(name = "description")
     var description: String,
     @Json(name = "icon")

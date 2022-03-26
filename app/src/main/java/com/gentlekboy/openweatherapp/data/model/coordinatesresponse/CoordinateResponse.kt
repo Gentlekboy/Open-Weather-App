@@ -1,11 +1,15 @@
-package com.gentlekboy.openweatherapp.data.model.coordinates
+package com.gentlekboy.openweatherapp.data.model.coordinatesresponse
 
-
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Entity(tableName = "weather_table")
 @JsonClass(generateAdapter = true)
 data class CoordinateResponse(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     @Json(name = "alerts")
     var alerts: List<Alert>,
     @Json(name = "current")

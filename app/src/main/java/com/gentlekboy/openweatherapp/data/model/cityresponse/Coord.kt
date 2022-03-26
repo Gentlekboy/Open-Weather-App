@@ -1,4 +1,4 @@
-package com.gentlekboy.openweatherapp.data.model.city
+package com.gentlekboy.openweatherapp.data.model.cityresponse
 
 
 import com.squareup.moshi.Json

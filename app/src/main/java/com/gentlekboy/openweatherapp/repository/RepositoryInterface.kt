@@ -1,18 +1,29 @@
 package com.gentlekboy.openweatherapp.repository
 
-import com.gentlekboy.openweatherapp.data.model.city.CityWeatherResponse
-import com.gentlekboy.openweatherapp.data.model.coordinates.CoordinateResponse
+import androidx.lifecycle.LiveData
+import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
+import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinateResponse
 import retrofit2.Response
 
 interface RepositoryInterface {
-    suspend fun getWeatherByCity(
+    suspend fun fetchCoordinatesFromApiToDb(
         cityName: String,
         apiKey: String
-    ): Response<CityWeatherResponse>
+    )
+
+    suspend fun fetchWeatherFromApiToDb(
+        latitude: Double,
+        longitude: Double,
+        apiKey: String
+    )
 
     suspend fun getWeatherByCoordinates(
         latitude: Double,
         longitude: Double,
         apiKey: String
     ): Response<CoordinateResponse>
+
+    fun getCoordinatesFromDb(): LiveData<CityResponse>
+
+    fun getWeatherFromDb(): LiveData<CoordinateResponse>
 }
