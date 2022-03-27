@@ -11,7 +11,7 @@ data class CoordinateResponse(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     @Json(name = "alerts")
-    var alerts: List<Alert>,
+    var alerts: List<Alert>? = null,
     @Json(name = "current")
     var current: Current,
     @Json(name = "hourly")
@@ -21,5 +21,6 @@ data class CoordinateResponse(
     @Json(name = "lon")
     var lon: Double,
     @Json(name = "timezone")
-    var timezone: String
+    var timezone: String,
+    var isFavourite: Boolean = false
 )
