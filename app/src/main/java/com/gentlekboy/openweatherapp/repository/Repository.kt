@@ -12,17 +12,44 @@ class Repository @Inject constructor(
     private val weatherDao: WeatherDao
 ) : RepositoryInterface {
 
-    override suspend fun fetchCoordinatesFromApiToDb(
-        cityName: String,
-        apiKey: String
-    ) {
+    override suspend fun saveDataToDb(apiKey: String) {
+        fetchCoordinatesFromApiToDb(apiKey)
+        fetchWeatherFromApiToDb(apiKey)
+    }
+
+    override suspend fun fetchCoordinatesFromApiToDb(apiKey: String) {
         try {
-            val response = apiInterface.fetchCoordinatesByCityName(cityName, apiKey)
+            val listOfTopCities = arrayListOf(
+                "London",
+                "Paris",
+                "New York",
+                "Moscow",
+                "Dubai",
+                "Barcelona",
+                "Madrid",
+                "Rome",
+                "Doha",
+                "Amsterdam",
+                "Chicago",
+                "Toronto",
+                "Berlin",
+                "Sydney",
+                "Istanbul",
+                "Beijing",
+                "Milan",
+                "Hong Kong",
+                "Dublin",
+                "Miami"
+            )
 
-            if (response.isSuccessful) {
-                val data = response.body()
+            listOfTopCities.forEach { city ->
+                val response = apiInterface.fetchCoordinatesByCityName(city, apiKey)
 
-                if (data != null) coordinatesDao.insertCity(response.body()!!)
+                if (response.isSuccessful) {
+                    val data = response.body()
+
+                    if (data != null) coordinatesDao.insertCity(data)
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -30,22 +57,25 @@ class Repository @Inject constructor(
         }
     }
 
-    override suspend fun fetchWeatherFromApiToDb(
-        latitude: Double,
-        longitude: Double,
-        apiKey: String
-    ) {
+    override suspend fun fetchWeatherFromApiToDb(apiKey: String) {
         try {
-            val response = apiInterface.fetchWeatherReportByCoordinates(
-                latitude = latitude,
-                longitude = longitude,
-                apiKey = apiKey
-            )
+            val listOfCoordinates = coordinatesDao.fetchAllCoordinates()
+            val listOfWeatherInfo = weatherDao.fetchListOfWeatherData()
 
-            if (response.isSuccessful) {
-                val data = response.body()
+            if (listOfWeatherInfo.isNotEmpty()) weatherDao.deleteAllWeatherData()
 
-                if (data != null) weatherDao.insertWeatherData(response.body()!!)
+            listOfCoordinates.forEach { coordinate ->
+                val response = apiInterface.fetchWeatherReportByCoordinates(
+                    latitude = coordinate.lat,
+                    longitude = coordinate.lon,
+                    apiKey = apiKey
+                )
+
+                if (response.isSuccessful) {
+                    val data = response.body()
+
+                    if (data != null) weatherDao.insertWeatherData(data)
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -53,17 +83,7 @@ class Repository @Inject constructor(
         }
     }
 
-    override suspend fun getWeatherByCoordinates(
-        latitude: Double,
-        longitude: Double,
-        apiKey: String
-    ) = apiInterface.fetchWeatherReportByCoordinates(
-        latitude = latitude,
-        longitude = longitude,
-        apiKey = apiKey
-    )
+    override suspend fun deleteAllWeatherData() = weatherDao.deleteAllWeatherData()
 
-    override fun getCoordinatesFromDb() = coordinatesDao.fetchCityInfo()
-
-    override fun getWeatherFromDb() = weatherDao.fetchWeatherData()
+    override fun getWeatherLiveDataFromDb() = weatherDao.fetchWeatherLiveData()
 }

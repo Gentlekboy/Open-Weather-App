@@ -7,11 +7,11 @@ import com.google.gson.reflect.TypeToken
 
 class CoordinatesResponseTypeConverter {
     @TypeConverter
-    fun fromAlertToString(alert: List<Alert>): String = Gson().toJson(alert)
+    fun fromAlertToString(alert: List<Alert>?): String = Gson().toJson(alert)
 
     @TypeConverter
-    fun fromStringToAlert(alert: String): List<Alert> {
-        val listOfAlert = object : TypeToken<List<Alert>>() {}.type
+    fun fromStringToAlert(alert: String): List<Alert>? {
+        val listOfAlert = object : TypeToken<List<Alert>?>() {}.type
         return Gson().fromJson(alert, listOfAlert)
     }
 
