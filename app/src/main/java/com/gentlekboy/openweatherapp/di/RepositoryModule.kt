@@ -1,7 +1,7 @@
 package com.gentlekboy.openweatherapp.di
 
-import com.gentlekboy.openweatherapp.data.database.dao.CoordinatesDao
-import com.gentlekboy.openweatherapp.data.database.dao.WeatherDao
+import com.gentlekboy.openweatherapp.data.database.dao.CityResponseDao
+import com.gentlekboy.openweatherapp.data.database.dao.CoordinatesResponseDao
 import com.gentlekboy.openweatherapp.data.network.ApiInterface
 import com.gentlekboy.openweatherapp.repository.Repository
 import com.gentlekboy.openweatherapp.repository.RepositoryInterface
@@ -19,9 +19,9 @@ class RepositoryModule {
     @Provides
     fun provideRepository(
         apiInterface: ApiInterface,
-        coordinatesDao: CoordinatesDao,
-        weatherDao: WeatherDao
+        cityResponseDao: CityResponseDao,
+        coordinatesResponseDao: CoordinatesResponseDao
     ): RepositoryInterface {
-        return Repository(apiInterface, coordinatesDao, weatherDao)
+        return Repository(apiInterface, cityResponseDao, coordinatesResponseDao)
     }
 }

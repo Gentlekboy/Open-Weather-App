@@ -1,7 +1,7 @@
 package com.gentlekboy.openweatherapp.data.network
 
 import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
-import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinateResponse
+import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinatesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -19,5 +19,5 @@ interface ApiInterface {
         @Query("lon") longitude: Double,
         @Query("exclude") exclude: String = "minutely,daily",
         @Query("appid") apiKey: String
-    ): Response<CoordinateResponse>
+    ): Response<CoordinatesResponse>
 }
