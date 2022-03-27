@@ -10,8 +10,14 @@ interface WeatherDao {
     suspend fun insertWeatherData(coordinateResponse: CoordinateResponse)
 
     @Query("SELECT * FROM weather_table")
-    fun fetchWeatherData(): LiveData<CoordinateResponse>
+    fun fetchWeatherLiveData(): LiveData<List<CoordinateResponse>>
+
+    @Query("SELECT * FROM weather_table")
+    suspend fun fetchListOfWeatherData(): List<CoordinateResponse>
 
     @Update
     suspend fun updateWeatherData(coordinateResponse: CoordinateResponse)
+
+    @Query("DELETE FROM weather_table")
+    suspend fun deleteAllWeatherData()
 }
