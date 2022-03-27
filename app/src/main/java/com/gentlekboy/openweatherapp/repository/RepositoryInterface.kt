@@ -1,16 +1,21 @@
 package com.gentlekboy.openweatherapp.repository
 
 import androidx.lifecycle.LiveData
-import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinateResponse
+import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
+import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinatesResponse
 
 interface RepositoryInterface {
-    suspend fun saveDataToDb(apiKey: String)
+    suspend fun saveAllResponsesToDb(apiKey: String)
 
-    suspend fun fetchCoordinatesFromApiToDb(apiKey: String)
+    suspend fun fetchCityResponseFromApiToDb(apiKey: String)
 
-    suspend fun fetchWeatherFromApiToDb(apiKey: String)
+    suspend fun fetchCoordinatesResponseFromApiToDb(apiKey: String)
 
-    suspend fun deleteAllWeatherData()
+    suspend fun deleteAllCoordinatesResponse()
 
-    fun getWeatherLiveDataFromDb(): LiveData<List<CoordinateResponse>>
+    fun getCoordinatesResponseLiveData(): LiveData<List<CoordinatesResponse>>
+
+    fun getCityResponseLiveData(): LiveData<List<CityResponse>>
+
+    suspend fun updateCityResponse(cityResponse: CityResponse)
 }
