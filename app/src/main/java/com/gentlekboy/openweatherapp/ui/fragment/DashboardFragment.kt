@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinateResponse
+import androidx.navigation.fragment.findNavController
+import com.gentlekboy.openweatherapp.R
+import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
 import com.gentlekboy.openweatherapp.databinding.FragmentDashboardBinding
 import com.gentlekboy.openweatherapp.ui.adapter.TopCityAdapter
 import com.gentlekboy.openweatherapp.utils.clickinterface.RecyclerviewClickInterface
@@ -19,8 +21,8 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
     private val openWeatherViewModel: OpenWeatherViewModel by activityViewModels()
-    private val topCityAdapter: TopCityAdapter by lazy { TopCityAdapter(this, requireContext()) }
-    private lateinit var list: MutableList<CoordinateResponse>
+    private val topCityAdapter: TopCityAdapter by lazy { TopCityAdapter(this) }
+    private lateinit var cityResponseListFromDb: List<CityResponse>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +35,7 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        list = mutableListOf()
+        cityResponseListFromDb = mutableListOf()
 
         setUpAdapter()
         populateAdapter()
@@ -44,12 +46,11 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
     }
 
     private fun populateAdapter() {
-        openWeatherViewModel.getWeatherFromDb().observe(viewLifecycleOwner) {
-            if (it != null) {
-                list = it.toMutableList()
-                topCityAdapter.addTopCities(it.toMutableList())
+        openWeatherViewModel.getCityResponseLiveData()
+            .observe(viewLifecycleOwner) { listOfCityResponse ->
+                cityResponseListFromDb = listOfCityResponse
+                topCityAdapter.addTopCities(listOfCityResponse)
             }
-        }
     }
 
     override fun onDestroyView() {
@@ -58,9 +59,27 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
     }
 
     override fun navigateToCityDetails(position: Int) {
-        list[position].isFavourite = true
+        findNavController().navigate(R.id.action_dashboardFragment_to_detailFragment)
+    }
 
-        val sortByFav = list.sortedBy { !it.isFavourite }
-        topCityAdapter.addTopCities(sortByFav.toMutableList())
+    override fun setAsFavourite(position: Int) {
+        when (cityResponseListFromDb[position].isFavourite) {
+            true -> {
+                cityResponseListFromDb[position].isFavourite = false
+                val updatedCityResponse = cityResponseListFromDb[position].copy(isFavourite = false)
+                openWeatherViewModel.updateCityResponse(updatedCityResponse)
+
+                val sortedListByFavourites = cityResponseListFromDb.sortedBy { !it.isFavourite }
+                topCityAdapter.addTopCities(sortedListByFavourites)
+            }
+            false -> {
+                cityResponseListFromDb[position].isFavourite = true
+                val updatedCityResponse = cityResponseListFromDb[position].copy(isFavourite = true)
+                openWeatherViewModel.updateCityResponse(updatedCityResponse)
+
+                val sortedListByFavourites = cityResponseListFromDb.sortedBy { !it.isFavourite }
+                topCityAdapter.addTopCities(sortedListByFavourites)
+            }
+        }
     }
 }
