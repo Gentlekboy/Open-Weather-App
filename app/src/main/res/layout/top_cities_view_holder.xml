@@ -1,43 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginTop="8dp"
     android:foreground="?attr/selectableItemBackground"
-    app:cardElevation="0dp"
     android:clickable="true"
     android:focusable="true"
-    android:layout_marginHorizontal="4dp"
-    android:layout_marginTop="8dp">
+    app:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="8dp">
-
-        <ImageView
-            android:id="@+id/weather_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/weather_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/location_tv"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/feels_like"
-            tools:srcCompat="@tools:sample/avatars" />
+        android:paddingVertical="20dp">
 
         <TextView
-            android:id="@+id/feels_like"
-            android:layout_width="wrap_content"
+            android:id="@+id/date_text_view"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/montserrat_regular"
-            android:text="@string/feels_cloudy"
+            android:text="@string/tuesday_20_november_2022"
+            android:textAlignment="center"
             android:textColor="@color/text_black"
+            android:textSize="13sp"
             app:layout_constraintBottom_toTopOf="@+id/location_tv"
-            app:layout_constraintStart_toEndOf="@+id/weather_icon"
+            app:layout_constraintEnd_toStartOf="@+id/favourite_icon"
+            app:layout_constraintStart_toEndOf="@+id/temperature_text_view"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
@@ -45,27 +37,37 @@
             android:id="@+id/location_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/ikeja_ng"
+            android:textAlignment="center"
             android:textColor="@color/text_black"
-            android:textSize="18sp"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/temperature_text_view"
-            app:layout_constraintStart_toStartOf="@+id/feels_like"
-            app:layout_constraintTop_toBottomOf="@+id/feels_like" />
+            app:layout_constraintEnd_toEndOf="@+id/date_text_view"
+            app:layout_constraintStart_toStartOf="@+id/date_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
 
         <TextView
             android:id="@+id/temperature_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="@string/_68f"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/_50_u2103"
             android:textColor="@color/text_black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/weather_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/location_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/date_text_view" />
+
+        <ImageView
+            android:id="@+id/favourite_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/favourite_icon"
+            android:padding="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/weather_icon" />
+            app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

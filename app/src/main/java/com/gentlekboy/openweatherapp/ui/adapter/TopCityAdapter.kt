@@ -1,23 +1,22 @@
 package com.gentlekboy.openweatherapp.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinateResponse
+import com.gentlekboy.openweatherapp.R
+import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
 import com.gentlekboy.openweatherapp.databinding.TopCitiesViewHolderBinding
 import com.gentlekboy.openweatherapp.utils.clickinterface.RecyclerviewClickInterface
+import com.gentlekboy.openweatherapp.utils.convertTimeStampToLocalTime
 import com.gentlekboy.openweatherapp.utils.diffutil.TopCityDiffUtil
 
 class TopCityAdapter(
-    private val recyclerviewClickInterface: RecyclerviewClickInterface,
-    private val context: Context
+    private val recyclerviewClickInterface: RecyclerviewClickInterface
 ) :
     RecyclerView.Adapter<TopCityAdapter.TopCityViewHolder>() {
 
-    private var oldTopCityList = mutableListOf<CoordinateResponse>()
+    private var oldTopCityList = listOf<CityResponse>()
 
     inner class TopCityViewHolder(val binding: TopCitiesViewHolderBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -34,14 +33,24 @@ class TopCityAdapter(
         with(holder) {
             with(oldTopCityList[position]) {
                 with(binding) {
-                    feelsLike.text = current.weather[0].description
-                    temperatureTextView.text = current.temp.toString()
-                    locationTv.text = timezone
-                    Glide.with(context)
-                        .load("https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png")
-                        .into(weatherIcon)
-                }
+                    dateTextView.text = dt.convertTimeStampToLocalTime()
+                    temperatureTextView.text = main?.temp?.toString() + " F"
+                    locationTv.text = "$name, ${sys.country}"
 
+                    when (isFavourite) {
+                        true -> favouriteIcon.setBackgroundResource(R.drawable.favourite_clicked)
+                        false -> favouriteIcon.setBackgroundResource(R.drawable.favourite_unclicked)
+                    }
+
+                    favouriteIcon.setOnClickListener {
+                        recyclerviewClickInterface.setAsFavourite(
+                            position
+                        )
+                    }
+//                    Glide.with(context)
+//                        .load("https://openweathermap.org/img/wn/${weather?.get(0)?.icon}@2x.png")
+//                        .into(weatherIcon)
+                }
                 itemView.setOnClickListener {
                     recyclerviewClickInterface.navigateToCityDetails(position)
                 }
@@ -51,10 +60,10 @@ class TopCityAdapter(
 
     override fun getItemCount() = oldTopCityList.size
 
-    fun addTopCities(newTopCityList: MutableList<CoordinateResponse>) {
-        val diffUtilLists = TopCityDiffUtil(oldTopCityList, newTopCityList)
+    fun addTopCities(newTopCoordinatesList: List<CityResponse>) {
+        val diffUtilLists = TopCityDiffUtil(oldTopCityList, newTopCoordinatesList)
         val diffResult = DiffUtil.calculateDiff(diffUtilLists)
-        oldTopCityList = newTopCityList
+        oldTopCityList = newTopCoordinatesList
         diffResult.dispatchUpdatesTo(this)
     }
 }

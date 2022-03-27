@@ -1,23 +1,24 @@
 package com.gentlekboy.openweatherapp.repository
 
 import android.util.Log
-import com.gentlekboy.openweatherapp.data.database.dao.CoordinatesDao
-import com.gentlekboy.openweatherapp.data.database.dao.WeatherDao
+import com.gentlekboy.openweatherapp.data.database.dao.CityResponseDao
+import com.gentlekboy.openweatherapp.data.database.dao.CoordinatesResponseDao
+import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
 import com.gentlekboy.openweatherapp.data.network.ApiInterface
 import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val apiInterface: ApiInterface,
-    private val coordinatesDao: CoordinatesDao,
-    private val weatherDao: WeatherDao
+    private val cityResponseDao: CityResponseDao,
+    private val coordinatesResponseDao: CoordinatesResponseDao
 ) : RepositoryInterface {
 
-    override suspend fun saveDataToDb(apiKey: String) {
-        fetchCoordinatesFromApiToDb(apiKey)
-        fetchWeatherFromApiToDb(apiKey)
+    override suspend fun saveAllResponsesToDb(apiKey: String) {
+        fetchCityResponseFromApiToDb(apiKey)
+        fetchCoordinatesResponseFromApiToDb(apiKey)
     }
 
-    override suspend fun fetchCoordinatesFromApiToDb(apiKey: String) {
+    override suspend fun fetchCityResponseFromApiToDb(apiKey: String) {
         try {
             val listOfTopCities = arrayListOf(
                 "London",
@@ -48,7 +49,7 @@ class Repository @Inject constructor(
                 if (response.isSuccessful) {
                     val data = response.body()
 
-                    if (data != null) coordinatesDao.insertCity(data)
+                    if (data != null) cityResponseDao.insertCityResponse(data)
                 }
             }
         } catch (e: Exception) {
@@ -57,12 +58,12 @@ class Repository @Inject constructor(
         }
     }
 
-    override suspend fun fetchWeatherFromApiToDb(apiKey: String) {
+    override suspend fun fetchCoordinatesResponseFromApiToDb(apiKey: String) {
         try {
-            val listOfCoordinates = coordinatesDao.fetchAllCoordinates()
-            val listOfWeatherInfo = weatherDao.fetchListOfWeatherData()
+            val listOfCoordinates = cityResponseDao.fetchAllCoordinates()
+            val coordinatesResponseList = coordinatesResponseDao.fetchCoordinatesResponseList()
 
-            if (listOfWeatherInfo.isNotEmpty()) weatherDao.deleteAllWeatherData()
+            if (coordinatesResponseList.isNotEmpty()) coordinatesResponseDao.deleteAllCoordinatesResponse()
 
             listOfCoordinates.forEach { coordinate ->
                 val response = apiInterface.fetchWeatherReportByCoordinates(
@@ -74,7 +75,7 @@ class Repository @Inject constructor(
                 if (response.isSuccessful) {
                     val data = response.body()
 
-                    if (data != null) weatherDao.insertWeatherData(data)
+                    if (data != null) coordinatesResponseDao.insertCoordinatesResponse(data)
                 }
             }
         } catch (e: Exception) {
@@ -83,7 +84,14 @@ class Repository @Inject constructor(
         }
     }
 
-    override suspend fun deleteAllWeatherData() = weatherDao.deleteAllWeatherData()
+    override suspend fun deleteAllCoordinatesResponse() =
+        coordinatesResponseDao.deleteAllCoordinatesResponse()
 
-    override fun getWeatherLiveDataFromDb() = weatherDao.fetchWeatherLiveData()
+    override fun getCoordinatesResponseLiveData() =
+        coordinatesResponseDao.getCoordinatesResponseLiveData()
+
+    override fun getCityResponseLiveData() = cityResponseDao.getCityResponseLiveData()
+
+    override suspend fun updateCityResponse(cityResponse: CityResponse) =
+        cityResponseDao.updateCityResponse(cityResponse)
 }

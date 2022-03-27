@@ -18,4 +18,7 @@
     <string name="wind">Wind</string>
     <string name="_301_46f">301.46F</string>
     <string name="min_temperature">Min. temperature</string>
+    <string name="favourite_icon">Favourite icon</string>
+    <string name="tuesday_20_november_2022">Tuesday, 20 November, 2022</string>
+    <string name="_50_u2103">50℃</string>
 </resources>

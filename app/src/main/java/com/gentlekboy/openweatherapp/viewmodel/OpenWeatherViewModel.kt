@@ -2,6 +2,7 @@ package com.gentlekboy.openweatherapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
 import com.gentlekboy.openweatherapp.repository.RepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,9 +16,17 @@ class OpenWeatherViewModel @Inject constructor(
 
     fun saveDataToDb(apiKey: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryInterface.saveDataToDb(apiKey)
+            repositoryInterface.saveAllResponsesToDb(apiKey)
         }
     }
 
-    fun getWeatherFromDb() = repositoryInterface.getWeatherLiveDataFromDb()
+    fun getCoordinatesResponseLiveData() = repositoryInterface.getCoordinatesResponseLiveData()
+
+    fun getCityResponseLiveData() = repositoryInterface.getCityResponseLiveData()
+
+    fun updateCityResponse(cityResponse: CityResponse) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repositoryInterface.updateCityResponse(cityResponse)
+        }
+    }
 }

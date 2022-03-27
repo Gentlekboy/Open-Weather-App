@@ -2,8 +2,8 @@ package com.gentlekboy.openweatherapp.di
 
 import android.app.Application
 import com.gentlekboy.openweatherapp.data.database.OpenWeatherDb
-import com.gentlekboy.openweatherapp.data.database.dao.CoordinatesDao
-import com.gentlekboy.openweatherapp.data.database.dao.WeatherDao
+import com.gentlekboy.openweatherapp.data.database.dao.CityResponseDao
+import com.gentlekboy.openweatherapp.data.database.dao.CoordinatesResponseDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,10 +20,10 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideCoordinatesDao(openWeatherDb: OpenWeatherDb): CoordinatesDao =
+    fun provideCoordinatesDao(openWeatherDb: OpenWeatherDb): CityResponseDao =
         openWeatherDb.coordinatesDao()
 
     @Singleton
     @Provides
-    fun provideWeatherDao(openWeatherDb: OpenWeatherDb): WeatherDao = openWeatherDb.weatherDao()
+    fun provideWeatherDao(openWeatherDb: OpenWeatherDb): CoordinatesResponseDao = openWeatherDb.weatherDao()
 }
