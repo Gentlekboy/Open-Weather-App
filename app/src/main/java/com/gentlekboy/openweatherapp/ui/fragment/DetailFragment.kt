@@ -1,4 +1,4 @@
-package com.gentlekboy.openweatherapp.ui
+package com.gentlekboy.openweatherapp.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

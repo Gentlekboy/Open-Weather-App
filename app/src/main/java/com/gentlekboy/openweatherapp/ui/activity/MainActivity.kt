@@ -1,7 +1,6 @@
-package com.gentlekboy.openweatherapp.ui
+package com.gentlekboy.openweatherapp.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.gentlekboy.openweatherapp.R
@@ -21,19 +20,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        openWeatherViewModel.fetchCoordinatesFromApiToDb("Lagos", getKeys())
-        openWeatherViewModel.fetchWeatherFromApiToDb(
-            41.3888,
-            2.159,
-            getKeys()
-        )
-
-        openWeatherViewModel.getCoordinatesFromDb().observe(this) {
-            Log.d("GKB", "onCreate: $it")
-        }
-
-        openWeatherViewModel.getWeatherFromDb().observe(this) {
-            Log.d("GKB", "onCreate: $it")
-        }
+        openWeatherViewModel.saveDataToDb(getKeys())
     }
 }
