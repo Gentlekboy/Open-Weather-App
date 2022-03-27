@@ -5,22 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.gentlekboy.openweatherapp.data.database.dao.CoordinatesDao
-import com.gentlekboy.openweatherapp.data.database.dao.WeatherDao
+import com.gentlekboy.openweatherapp.data.database.dao.CityResponseDao
+import com.gentlekboy.openweatherapp.data.database.dao.CoordinatesResponseDao
 import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
-import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinateResponse
+import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinatesResponse
 import com.gentlekboy.openweatherapp.utils.typeconverter.CityResponseTypeConverter
 import com.gentlekboy.openweatherapp.utils.typeconverter.CoordinatesResponseTypeConverter
 
 @Database(
-    entities = [CityResponse::class, CoordinateResponse::class],
+    entities = [CityResponse::class, CoordinatesResponse::class],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(CityResponseTypeConverter::class, CoordinatesResponseTypeConverter::class)
 abstract class OpenWeatherDb : RoomDatabase() {
-    abstract fun coordinatesDao(): CoordinatesDao
-    abstract fun weatherDao(): WeatherDao
+    abstract fun coordinatesDao(): CityResponseDao
+    abstract fun weatherDao(): CoordinatesResponseDao
 
     companion object {
         @Volatile
