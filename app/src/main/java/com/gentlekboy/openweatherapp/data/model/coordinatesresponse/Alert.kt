@@ -7,15 +7,15 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Alert(
     @Json(name = "description")
-    var description: String,
+    var description: String? = null,
     @Json(name = "end")
-    var end: Int,
+    var end: Int? = null,
     @Json(name = "event")
-    var event: String,
+    var event: String? = null,
     @Json(name = "sender_name")
-    var senderName: String,
+    var senderName: String? = null,
     @Json(name = "start")
-    var start: Int,
+    var start: Int? = null,
     @Json(name = "tags")
-    var tags: List<String>
+    var tags: List<String>? = null
 )
