@@ -1,11 +1,11 @@
 package com.gentlekboy.openweatherapp.utils.diffutil
 
 import androidx.recyclerview.widget.DiffUtil
-import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.CoordinateResponse
+import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
 
 class TopCityDiffUtil(
-    private val oldList: MutableList<CoordinateResponse>,
-    private val newList: MutableList<CoordinateResponse>
+    private val oldList: List<CityResponse>,
+    private val newList: List<CityResponse>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize() = oldList.size
@@ -17,12 +17,18 @@ class TopCityDiffUtil(
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = when {
         oldList[oldItemPosition].id != newList[newItemPosition].id -> false
-        oldList[oldItemPosition].alerts != newList[newItemPosition].alerts -> false
-        oldList[oldItemPosition].current != newList[newItemPosition].current -> false
-        oldList[oldItemPosition].hourly != newList[newItemPosition].hourly -> false
-        oldList[oldItemPosition].lat != newList[newItemPosition].lat -> false
-        oldList[oldItemPosition].lon != newList[newItemPosition].lon -> false
+        oldList[oldItemPosition].base != newList[newItemPosition].base -> false
+        oldList[oldItemPosition].clouds != newList[newItemPosition].clouds -> false
+        oldList[oldItemPosition].cod != newList[newItemPosition].cod -> false
+        oldList[oldItemPosition].coord != newList[newItemPosition].coord -> false
+        oldList[oldItemPosition].dt != newList[newItemPosition].dt -> false
+        oldList[oldItemPosition].main != newList[newItemPosition].main -> false
+        oldList[oldItemPosition].name != newList[newItemPosition].name -> false
+        oldList[oldItemPosition].sys != newList[newItemPosition].sys -> false
         oldList[oldItemPosition].timezone != newList[newItemPosition].timezone -> false
+        oldList[oldItemPosition].visibility != newList[newItemPosition].visibility -> false
+        oldList[oldItemPosition].weather != newList[newItemPosition].weather -> false
+        oldList[oldItemPosition].wind != newList[newItemPosition].wind -> false
         oldList[oldItemPosition].isFavourite != newList[newItemPosition].isFavourite -> false
         else -> true
     }
