@@ -13,19 +13,11 @@ class OpenWeatherViewModel @Inject constructor(
     private val repositoryInterface: RepositoryInterface
 ) : ViewModel() {
 
-    fun fetchCoordinatesFromApiToDb(cityName: String, apiKey: String) {
+    fun saveDataToDb(apiKey: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryInterface.fetchCoordinatesFromApiToDb(cityName, apiKey)
+            repositoryInterface.saveDataToDb(apiKey)
         }
     }
 
-    fun fetchWeatherFromApiToDb(latitude: Double, longitude: Double, apiKey: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repositoryInterface.fetchWeatherFromApiToDb(latitude, longitude, apiKey)
-        }
-    }
-
-    fun getCoordinatesFromDb() = repositoryInterface.getCoordinatesFromDb()
-
-    fun getWeatherFromDb() = repositoryInterface.getWeatherFromDb()
+    fun getWeatherFromDb() = repositoryInterface.getWeatherLiveDataFromDb()
 }
