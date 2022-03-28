@@ -20,8 +20,6 @@ class OpenWeatherViewModel @Inject constructor(
         }
     }
 
-    fun getCoordinatesResponseLiveData() = repositoryInterface.getCoordinatesResponseLiveData()
-
     fun getCityResponseLiveData() = repositoryInterface.getCityResponseLiveData()
 
     fun updateCityResponse(cityResponse: CityResponse) {
@@ -29,4 +27,7 @@ class OpenWeatherViewModel @Inject constructor(
             repositoryInterface.updateCityResponse(cityResponse)
         }
     }
+
+    fun getDailyWeatherLiveData(latitude: Double, longitude: Double) =
+        repositoryInterface.getDailyWeatherLiveData(latitude, longitude)
 }

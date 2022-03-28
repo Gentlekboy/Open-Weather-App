@@ -9,12 +9,12 @@
     <string name="feels_cloudy">Feels Cloudy</string>
     <string name="top_cities">Top Cities</string>
     <string name="get_forecast_for_current_location">Get Forecast For Current Location</string>
-<string name="weather_info">Weather Info</string>
+<string name="daily_forecast">Daily Forecast</string>
     <string name="sunrise">Sunrise</string>
     <string name="sunset">Sunset</string>
     <string name="sunrise_at_6_30am">Sunrise at 6:30AM</string>
     <string name="sunset_at_7_00pm">Sunset at 7:00PM</string>
-    <string name="core">Core</string>
+    <string name="_7_days_forecast">7 Days Forecast</string>
     <string name="wind">Wind</string>
     <string name="_301_46f">301.46F</string>
     <string name="min_temperature">Min. temperature</string>

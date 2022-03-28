@@ -1,10 +1,13 @@
 package com.gentlekboy.openweatherapp.data.model.cityresponse
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "city_response_table")
 @JsonClass(generateAdapter = true)
 data class CityResponse(
@@ -36,4 +39,4 @@ data class CityResponse(
     @Json(name = "wind")
     var wind: Wind? = null,
     var isFavourite: Boolean = false
-)
+) : Parcelable

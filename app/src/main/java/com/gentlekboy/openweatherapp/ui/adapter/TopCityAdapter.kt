@@ -8,7 +8,7 @@ import com.gentlekboy.openweatherapp.R
 import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
 import com.gentlekboy.openweatherapp.databinding.TopCitiesViewHolderBinding
 import com.gentlekboy.openweatherapp.utils.clickinterface.RecyclerviewClickInterface
-import com.gentlekboy.openweatherapp.utils.convertTimeStampToLocalTime
+import com.gentlekboy.openweatherapp.utils.convertTimeStampToDate
 import com.gentlekboy.openweatherapp.utils.diffutil.TopCityDiffUtil
 
 class TopCityAdapter(
@@ -33,8 +33,8 @@ class TopCityAdapter(
         with(holder) {
             with(oldTopCityList[position]) {
                 with(binding) {
-                    dateTextView.text = dt.convertTimeStampToLocalTime()
-                    temperatureTextView.text = main?.temp?.toString() + " F"
+                    dateTextView.text = dt.convertTimeStampToDate()
+                    temperatureTextView.text = main?.temp?.toString() + " \u2103"
                     locationTv.text = "$name, ${sys.country}"
 
                     when (isFavourite) {
@@ -47,9 +47,6 @@ class TopCityAdapter(
                             position
                         )
                     }
-//                    Glide.with(context)
-//                        .load("https://openweathermap.org/img/wn/${weather?.get(0)?.icon}@2x.png")
-//                        .into(weatherIcon)
                 }
                 itemView.setOnClickListener {
                     recyclerviewClickInterface.navigateToCityDetails(position)

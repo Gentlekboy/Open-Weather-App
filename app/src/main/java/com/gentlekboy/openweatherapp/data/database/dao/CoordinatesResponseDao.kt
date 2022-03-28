@@ -10,10 +10,10 @@ interface CoordinatesResponseDao {
     suspend fun insertCoordinatesResponse(coordinatesResponse: CoordinatesResponse)
 
     @Query("SELECT * FROM coordinates_response_table")
-    fun getCoordinatesResponseLiveData(): LiveData<List<CoordinatesResponse>>
-
-    @Query("SELECT * FROM coordinates_response_table")
     suspend fun fetchCoordinatesResponseList(): List<CoordinatesResponse>
+
+    @Query("SELECT * FROM coordinates_response_table WHERE lat = :latitude AND lon = :longitude")
+    fun getDailyWeatherLiveData(latitude: Double, longitude: Double): LiveData<CoordinatesResponse>
 
     @Update
     suspend fun updateCoordinatesResponse(coordinatesResponse: CoordinatesResponse)

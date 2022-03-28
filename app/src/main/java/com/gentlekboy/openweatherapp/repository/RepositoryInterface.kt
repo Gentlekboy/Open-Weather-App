@@ -13,9 +13,9 @@ interface RepositoryInterface {
 
     suspend fun deleteAllCoordinatesResponse()
 
-    fun getCoordinatesResponseLiveData(): LiveData<List<CoordinatesResponse>>
-
     fun getCityResponseLiveData(): LiveData<List<CityResponse>>
 
     suspend fun updateCityResponse(cityResponse: CityResponse)
+
+    fun getDailyWeatherLiveData(latitude: Double, longitude: Double): LiveData<CoordinatesResponse>
 }

@@ -1,47 +1,43 @@
 package com.gentlekboy.openweatherapp.utils.typeconverter
 
 import androidx.room.TypeConverter
-import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.*
+import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.Daily
+import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.Temp
+import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.WeatherX
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class CoordinatesResponseTypeConverter {
-    @TypeConverter
-    fun fromAlertToString(alert: List<Alert>?): String = Gson().toJson(alert)
+
+//    @TypeConverter
+//    fun fromWeatherToString(weather: Weather): String = Gson().toJson(weather)
+//
+//    @TypeConverter
+//    fun fromStringToWeather(weather: String): Weather =
+//        Gson().fromJson(weather, Weather::class.java)
 
     @TypeConverter
-    fun fromStringToAlert(alert: String): List<Alert>? {
-        val listOfAlert = object : TypeToken<List<Alert>?>() {}.type
-        return Gson().fromJson(alert, listOfAlert)
+    fun fromTempToString(temp: Temp): String = Gson().toJson(temp)
+
+    @TypeConverter
+    fun fromStringToTemp(temp: String): Temp =
+        Gson().fromJson(temp, Temp::class.java)
+
+    @TypeConverter
+    fun fromDailyToString(daily: List<Daily>): String = Gson().toJson(daily)
+
+    @TypeConverter
+    fun fromStringToDaily(daily: String): List<Daily> {
+        val listOfDaily = object : TypeToken<List<Daily>>() {}.type
+        return Gson().fromJson(daily, listOfDaily)
     }
 
     @TypeConverter
-    fun fromWeatherToString(weather: Weather): String = Gson().toJson(weather)
+    fun fromWeatherXToString(weatherX: List<WeatherX>): String = Gson().toJson(weatherX)
 
     @TypeConverter
-    fun fromStringToWeather(weather: String): Weather =
-        Gson().fromJson(weather, Weather::class.java)
-
-    @TypeConverter
-    fun fromCurrentToString(current: Current): String = Gson().toJson(current)
-
-    @TypeConverter
-    fun fromStringToCurrent(current: String): Current =
-        Gson().fromJson(current, Current::class.java)
-
-    @TypeConverter
-    fun fromWeatherXToString(weatherX: WeatherX): String = Gson().toJson(weatherX)
-
-    @TypeConverter
-    fun fromStringToWeatherX(weatherX: String): WeatherX =
-        Gson().fromJson(weatherX, WeatherX::class.java)
-
-    @TypeConverter
-    fun fromHourlyToString(hourly: List<Hourly>): String = Gson().toJson(hourly)
-
-    @TypeConverter
-    fun fromStringToHourly(hourly: String): List<Hourly> {
-        val listOfHourly = object : TypeToken<List<Hourly>>() {}.type
-        return Gson().fromJson(hourly, listOfHourly)
+    fun fromStringToWeatherX(weatherX: String): List<WeatherX> {
+        val listOfWeatherX = object : TypeToken<List<WeatherX>>() {}.type
+        return Gson().fromJson(weatherX, listOfWeatherX)
     }
 }
