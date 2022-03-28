@@ -51,3 +51,13 @@ fun Context.isInternetAvailable(): Boolean {
 
     return result
 }
+
+fun String.addCelsiusSign() = "$this \u2103"
+
+fun String.capitalizeFirstLetterOfEachWord() = this.split(" ").joinToString(" ") {
+    it.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(
+            Locale.getDefault()
+        ) else it.toString()
+    }
+}.trimEnd()
