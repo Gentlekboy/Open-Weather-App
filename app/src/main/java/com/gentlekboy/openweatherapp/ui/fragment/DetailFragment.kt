@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.gentlekboy.openweatherapp.R
 import com.gentlekboy.openweatherapp.databinding.FragmentDetailBinding
 import com.gentlekboy.openweatherapp.ui.adapter.DailyWeatherAdapter
+import com.gentlekboy.openweatherapp.utils.addCelsiusSign
+import com.gentlekboy.openweatherapp.utils.capitalizeFirstLetterOfEachWord
 import com.gentlekboy.openweatherapp.utils.convertTimeStampToDate
 import com.gentlekboy.openweatherapp.viewmodel.OpenWeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,11 +65,11 @@ class DetailFragment : Fragment() {
     private fun populateViews() {
         binding.apply {
             dateTv.text = args.cityResponse.dt.convertTimeStampToDate()
-            temperatureTv.text = args.cityResponse.main?.temp.toString() + " \u2103"
+            temperatureTv.text = args.cityResponse.main.temp.toString().addCelsiusSign()
             cityTv.text = "${args.cityResponse.name}, ${args.cityResponse.sys.country}"
-            feelsLikeTv.text = args.cityResponse.weather?.get(0)?.description
+            feelsLikeTv.text = args.cityResponse.weather.first().description.capitalizeFirstLetterOfEachWord()
             Glide.with(requireContext())
-                .load("https://openweathermap.org/img/wn/${args.cityResponse.weather?.get(0)?.icon}@2x.png")
+                .load("https://openweathermap.org/img/wn/${args.cityResponse.weather.first().icon}@2x.png")
                 .placeholder(R.drawable.cloud_white)
                 .into(weatherImage)
         }

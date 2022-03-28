@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gentlekboy.openweatherapp.R
 import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
 import com.gentlekboy.openweatherapp.databinding.TopCitiesViewHolderBinding
+import com.gentlekboy.openweatherapp.utils.addCelsiusSign
 import com.gentlekboy.openweatherapp.utils.clickinterface.RecyclerviewClickInterface
 import com.gentlekboy.openweatherapp.utils.convertTimeStampToDate
 import com.gentlekboy.openweatherapp.utils.diffutil.TopCityDiffUtil
@@ -35,7 +36,7 @@ class TopCityAdapter(
             with(oldTopCityList[position]) {
                 with(binding) {
                     dateTextView.text = dt.convertTimeStampToDate()
-                    temperatureTextView.text = main?.temp?.toString() + " \u2103"
+                    temperatureTextView.text = main.temp.toString().addCelsiusSign()
                     locationTv.text = "$name, ${sys.country}"
 
                     when (isFavourite) {
