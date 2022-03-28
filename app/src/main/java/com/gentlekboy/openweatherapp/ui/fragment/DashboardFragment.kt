@@ -1,5 +1,6 @@
 package com.gentlekboy.openweatherapp.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
+import com.gentlekboy.openweatherapp.data.model.service.WeatherServiceModel
 import com.gentlekboy.openweatherapp.databinding.FragmentDashboardBinding
 import com.gentlekboy.openweatherapp.ui.adapter.TopCityAdapter
+import com.gentlekboy.openweatherapp.utils.FAVOURITE_CITY
 import com.gentlekboy.openweatherapp.utils.clickinterface.RecyclerviewClickInterface
 import com.gentlekboy.openweatherapp.utils.isInternetAvailable
+import com.gentlekboy.openweatherapp.utils.service.OpenWeatherService
 import com.gentlekboy.openweatherapp.viewmodel.OpenWeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +30,6 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
     private val binding get() = _binding!!
     private val openWeatherViewModel: OpenWeatherViewModel by activityViewModels()
     private val topCityAdapter: TopCityAdapter by lazy { TopCityAdapter(this) }
-    private lateinit var cityResponseListFromDb: List<CityResponse>
     private external fun getKeys(): String
 
     override fun onCreateView(
@@ -40,12 +43,12 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        cityResponseListFromDb = mutableListOf()
         binding.retryButton.setOnClickListener { fetchDataFromApi() }
 
         setUpAdapter()
         populateAdapter()
         filterCity()
+        startServiceForFavouriteCity()
     }
 
     private fun setUpAdapter() {
@@ -56,6 +59,31 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
         openWeatherViewModel.saveDataToDb(getKeys(), requireContext())
     }
 
+    private fun startServiceForFavouriteCity() {
+        openWeatherViewModel.getCityResponseLiveData()
+            .observe(viewLifecycleOwner) { listOfCityResponse ->
+                val intent = Intent(activity, OpenWeatherService::class.java)
+                val cityResponse = listOfCityResponse.filter { it.isFavourite }
+
+                when (cityResponse.isNotEmpty()) {
+                    true -> {
+                        requireActivity().startService(
+                            intent.putExtra(
+                                FAVOURITE_CITY,
+                                WeatherServiceModel(
+                                    cityResponse.first().main.temp,
+                                    "${cityResponse.first().name}, ${cityResponse.first().sys.country}",
+                                    cityResponse.first().weather.first().description
+                                )
+                            )
+                        )
+                    }
+                    false -> {
+                        requireActivity().stopService(intent)
+                    }
+                }
+            }
+    }
 
     private fun filterCity() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -78,7 +106,6 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
     private fun populateAdapter() {
         openWeatherViewModel.getCityResponseLiveData()
             .observe(viewLifecycleOwner) { listOfCityResponse ->
-                cityResponseListFromDb = listOfCityResponse
 
                 if (listOfCityResponse.isEmpty() && !requireContext().isInternetAvailable()) {
                     binding.apply {
