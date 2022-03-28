@@ -1,10 +1,12 @@
 package com.gentlekboy.openweatherapp.repository
 
+import android.content.Context
 import android.util.Log
 import com.gentlekboy.openweatherapp.data.database.dao.CityResponseDao
 import com.gentlekboy.openweatherapp.data.database.dao.CoordinatesResponseDao
 import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
 import com.gentlekboy.openweatherapp.data.network.ApiInterface
+import com.gentlekboy.openweatherapp.utils.isInternetAvailable
 import javax.inject.Inject
 
 class Repository @Inject constructor(
@@ -13,9 +15,9 @@ class Repository @Inject constructor(
     private val coordinatesResponseDao: CoordinatesResponseDao
 ) : RepositoryInterface {
 
-    override suspend fun saveAllResponsesToDb(apiKey: String) {
+    override suspend fun saveAllResponsesToDb(apiKey: String, context: Context) {
         fetchCityResponseFromApiToDb(apiKey)
-        fetchCoordinatesResponseFromApiToDb(apiKey)
+        fetchCoordinatesResponseFromApiToDb(apiKey, context)
     }
 
     override suspend fun fetchCityResponseFromApiToDb(apiKey: String) {
@@ -58,12 +60,14 @@ class Repository @Inject constructor(
         }
     }
 
-    override suspend fun fetchCoordinatesResponseFromApiToDb(apiKey: String) {
+    override suspend fun fetchCoordinatesResponseFromApiToDb(apiKey: String, context: Context) {
         try {
             val listOfCoordinates = cityResponseDao.fetchAllCoordinates()
             val coordinatesResponseList = coordinatesResponseDao.fetchCoordinatesResponseList()
 
-            if (coordinatesResponseList.isNotEmpty()) coordinatesResponseDao.deleteAllCoordinatesResponse()
+            if (coordinatesResponseList.isNotEmpty() && context.isInternetAvailable()) {
+                coordinatesResponseDao.deleteAllCoordinatesResponse()
+            }
 
             listOfCoordinates.forEach { coordinate ->
                 val response = apiInterface.fetchWeatherReportByCoordinates(

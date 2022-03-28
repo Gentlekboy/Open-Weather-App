@@ -68,7 +68,7 @@ class DetailFragment : Fragment() {
             feelsLikeTv.text = args.cityResponse.weather?.get(0)?.description
             Glide.with(requireContext())
                 .load("https://openweathermap.org/img/wn/${args.cityResponse.weather?.get(0)?.icon}@2x.png")
-                .placeholder(R.drawable.cloud)
+                .placeholder(R.drawable.cloud_white)
                 .into(weatherImage)
         }
     }
