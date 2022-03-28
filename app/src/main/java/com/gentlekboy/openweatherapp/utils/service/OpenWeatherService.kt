@@ -11,9 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.gentlekboy.openweatherapp.R
 import com.gentlekboy.openweatherapp.data.model.service.WeatherServiceModel
 import com.gentlekboy.openweatherapp.ui.fragment.DashboardFragment
-import com.gentlekboy.openweatherapp.utils.CHANNEL_ID
-import com.gentlekboy.openweatherapp.utils.CHANNEL_NAME
-import com.gentlekboy.openweatherapp.utils.FAVOURITE_CITY
+import com.gentlekboy.openweatherapp.utils.*
 
 class OpenWeatherService : Service() {
     override fun onBind(p0: Intent?): IBinder? = null
@@ -40,8 +38,8 @@ class OpenWeatherService : Service() {
         val notificationIntent = Intent(this, DashboardFragment::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("${weatherInfo?.temperature}\u2103 in ${weatherInfo?.city}")
-            .setContentText(weatherInfo?.weatherDescription)
+            .setContentTitle("${weatherInfo?.temperature.toString().addCelsiusSign()} in ${weatherInfo?.city}")
+            .setContentText(weatherInfo?.weatherDescription?.capitalizeFirstLetterOfEachWord())
             .setSmallIcon(R.drawable.cloud)
             .setContentIntent(pendingIntent)
             .build()
