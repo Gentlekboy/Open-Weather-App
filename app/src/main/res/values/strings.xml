@@ -21,4 +21,6 @@
     <string name="favourite_icon">Favourite icon</string>
     <string name="tuesday_20_november_2022">Tuesday, 20 November, 2022</string>
     <string name="_50_u2103">50℃</string>
+    <string name="retry">Retry</string>
+    <string name="kindly_turn_on_your_internet_and_click_the_retry_button">Kindly turn on your internet and click the retry button</string>
 </resources>
