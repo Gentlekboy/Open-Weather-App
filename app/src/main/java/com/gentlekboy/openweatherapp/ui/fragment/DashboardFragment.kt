@@ -40,7 +40,6 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
         super.onViewCreated(view, savedInstanceState)
 
         cityResponseListFromDb = mutableListOf()
-
         binding.retryButton.setOnClickListener { fetchDataFromApi() }
 
         setUpAdapter()
@@ -92,30 +91,27 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
         _binding = null
     }
 
-    override fun navigateToCityDetails(position: Int) {
-        val action = DashboardFragmentDirections.actionDashboardFragmentToDetailFragment(
-            cityResponseListFromDb[position]
-        )
+    override fun navigateToCityDetails(currentCity: CityResponse) {
+        val action =
+            DashboardFragmentDirections.actionDashboardFragmentToDetailFragment(currentCity)
         findNavController().navigate(action)
     }
 
-    override fun setAsFavourite(position: Int) {
-        when (cityResponseListFromDb[position].isFavourite) {
+    override fun setAsFavourite(currentCity: CityResponse) {
+        when (currentCity.isFavourite) {
             true -> {
-                cityResponseListFromDb[position].isFavourite = false
-                val updatedCityResponse = cityResponseListFromDb[position].copy(isFavourite = false)
+                val updatedCityResponse = currentCity.copy(isFavourite = false)
                 openWeatherViewModel.updateCityResponse(updatedCityResponse)
 
-                val sortedListByFavourites = cityResponseListFromDb.sortedBy { !it.isFavourite }
-                topCityAdapter.addTopCities(sortedListByFavourites)
+                openWeatherViewModel.getCityResponseLiveData()
+                    .observe(viewLifecycleOwner) { topCityAdapter.addTopCities(it) }
             }
             false -> {
-                cityResponseListFromDb[position].isFavourite = true
-                val updatedCityResponse = cityResponseListFromDb[position].copy(isFavourite = true)
+                val updatedCityResponse = currentCity.copy(isFavourite = true)
                 openWeatherViewModel.updateCityResponse(updatedCityResponse)
 
-                val sortedListByFavourites = cityResponseListFromDb.sortedBy { !it.isFavourite }
-                topCityAdapter.addTopCities(sortedListByFavourites)
+                openWeatherViewModel.getCityResponseLiveData()
+                    .observe(viewLifecycleOwner) { topCityAdapter.addTopCities(it) }
             }
         }
     }
