@@ -19,4 +19,6 @@ interface RepositoryInterface {
     suspend fun updateCityResponse(cityResponse: CityResponse)
 
     fun getDailyWeatherLiveData(latitude: Double, longitude: Double): LiveData<CoordinatesResponse>
+
+    fun searchDatabaseForCity(cityName: String): LiveData<List<CityResponse>>
 }

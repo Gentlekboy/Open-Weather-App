@@ -98,4 +98,7 @@ class Repository @Inject constructor(
 
     override fun getDailyWeatherLiveData(latitude: Double, longitude: Double) =
         coordinatesResponseDao.getDailyWeatherLiveData(latitude, longitude)
+
+    override fun searchDatabaseForCity(cityName: String) =
+        cityResponseDao.searchDatabaseForCity(cityName)
 }

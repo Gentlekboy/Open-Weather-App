@@ -18,4 +18,7 @@ interface CityResponseDao {
 
     @Update
     suspend fun updateCityResponse(cityResponse: CityResponse)
+
+    @Query("SELECT * FROM city_response_table WHERE name LIKE :cityName")
+    fun searchDatabaseForCity(cityName: String): LiveData<List<CityResponse>>
 }
