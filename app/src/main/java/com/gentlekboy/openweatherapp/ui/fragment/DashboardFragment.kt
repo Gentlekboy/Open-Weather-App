@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.gentlekboy.openweatherapp.R
 import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
 import com.gentlekboy.openweatherapp.databinding.FragmentDashboardBinding
 import com.gentlekboy.openweatherapp.ui.adapter.TopCityAdapter
@@ -59,7 +58,10 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
     }
 
     override fun navigateToCityDetails(position: Int) {
-        findNavController().navigate(R.id.action_dashboardFragment_to_detailFragment)
+        val action = DashboardFragmentDirections.actionDashboardFragmentToDetailFragment(
+            cityResponseListFromDb[position]
+        )
+        findNavController().navigate(action)
     }
 
     override fun setAsFavourite(position: Int) {
