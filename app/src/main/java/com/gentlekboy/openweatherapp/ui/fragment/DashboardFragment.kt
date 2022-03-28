@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -44,6 +45,7 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
 
         setUpAdapter()
         populateAdapter()
+        filterCity()
     }
 
     private fun setUpAdapter() {
@@ -52,6 +54,25 @@ class DashboardFragment : Fragment(), RecyclerviewClickInterface {
 
     private fun fetchDataFromApi() {
         openWeatherViewModel.saveDataToDb(getKeys(), requireContext())
+    }
+
+
+    private fun filterCity() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = true
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) searchDatabaseForCity(newText)
+                return true
+            }
+        })
+    }
+
+    fun searchDatabaseForCity(cityName: String) {
+        val searchQuery = "%$cityName%"
+        openWeatherViewModel.searchDatabaseForCity(searchQuery).observe(viewLifecycleOwner) {
+            topCityAdapter.addTopCities(it)
+        }
     }
 
     private fun populateAdapter() {

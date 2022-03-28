@@ -31,4 +31,7 @@ class OpenWeatherViewModel @Inject constructor(
 
     fun getDailyWeatherLiveData(latitude: Double, longitude: Double) =
         repositoryInterface.getDailyWeatherLiveData(latitude, longitude)
+
+    fun searchDatabaseForCity(cityName: String) =
+        repositoryInterface.searchDatabaseForCity(cityName)
 }
