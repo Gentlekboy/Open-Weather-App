@@ -25,7 +25,7 @@ data class CityResponse(
     @Json(name = "dt")
     var dt: Int,
     @Json(name = "main")
-    var main: Main? = null,
+    var main: Main,
     @Json(name = "name")
     var name: String? = null,
     @Json(name = "sys")
@@ -35,7 +35,7 @@ data class CityResponse(
     @Json(name = "visibility")
     var visibility: Int? = null,
     @Json(name = "weather")
-    var weather: List<Weather>? = null,
+    var weather: List<Weather>,
     @Json(name = "wind")
     var wind: Wind? = null,
     var isFavourite: Boolean = false

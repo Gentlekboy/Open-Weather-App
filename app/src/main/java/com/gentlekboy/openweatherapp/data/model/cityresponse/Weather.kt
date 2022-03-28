@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @JsonClass(generateAdapter = true)
 data class Weather(
     @Json(name = "description")
-    var description: String? = null,
+    var description: String,
     @Json(name = "icon")
     var icon: String? = null,
     @Json(name = "id")
