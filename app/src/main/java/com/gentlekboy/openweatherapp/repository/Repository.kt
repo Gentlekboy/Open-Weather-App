@@ -87,11 +87,11 @@ class Repository @Inject constructor(
     override suspend fun deleteAllCoordinatesResponse() =
         coordinatesResponseDao.deleteAllCoordinatesResponse()
 
-    override fun getCoordinatesResponseLiveData() =
-        coordinatesResponseDao.getCoordinatesResponseLiveData()
-
     override fun getCityResponseLiveData() = cityResponseDao.getCityResponseLiveData()
 
     override suspend fun updateCityResponse(cityResponse: CityResponse) =
         cityResponseDao.updateCityResponse(cityResponse)
+
+    override fun getDailyWeatherLiveData(latitude: Double, longitude: Double) =
+        coordinatesResponseDao.getDailyWeatherLiveData(latitude, longitude)
 }
