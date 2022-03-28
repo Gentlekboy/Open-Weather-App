@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.gentlekboy.openweatherapp.R
 import com.gentlekboy.openweatherapp.data.model.coordinatesresponse.Daily
 import com.gentlekboy.openweatherapp.databinding.DailyWeatherViewHolderBinding
+import com.gentlekboy.openweatherapp.utils.addCelsiusSign
 import com.gentlekboy.openweatherapp.utils.convertTimeStampToDate
 import com.gentlekboy.openweatherapp.utils.convertTimeStampToTime
 import com.gentlekboy.openweatherapp.utils.diffutil.DailyWeatherDiffUtil
@@ -35,9 +36,9 @@ class DailyWeatherAdapter(private val context: Context) :
                 with(binding) {
                     date.text = dt.convertTimeStampToDate()
                     timeTv.text = dt.convertTimeStampToTime()
-                    temperatureTextView.text = "${temp.day} \u2103"
+                    temperatureTextView.text = "${temp.day}".addCelsiusSign()
                     Glide.with(context)
-                        .load("https://openweathermap.org/img/wn/${weather[0].icon}@2x.png")
+                        .load("https://openweathermap.org/img/wn/${weather.first().icon}@2x.png")
                         .placeholder(R.drawable.cloud)
                         .into(weatherIcon)
                 }
