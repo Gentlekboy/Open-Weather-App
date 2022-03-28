@@ -10,14 +10,16 @@ interface ApiInterface {
     @GET("weather")
     suspend fun fetchCoordinatesByCityName(
         @Query("q") cityName: String,
-        @Query("appid") apiKey: String
+        @Query("appid") apiKey: String,
+        @Query("units") units: String = "metric"
     ): Response<CityResponse>
 
     @GET("onecall")
     suspend fun fetchWeatherReportByCoordinates(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
-        @Query("exclude") exclude: String = "minutely,daily",
-        @Query("appid") apiKey: String
+        @Query("exclude") exclude: String = "minutely,hourly",
+        @Query("appid") apiKey: String,
+        @Query("units") units: String = "metric"
     ): Response<CoordinatesResponse>
 }
