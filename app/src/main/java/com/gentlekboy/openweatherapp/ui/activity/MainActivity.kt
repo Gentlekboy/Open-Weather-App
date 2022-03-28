@@ -20,6 +20,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        openWeatherViewModel.saveDataToDb(getKeys())
+        openWeatherViewModel.saveDataToDb(getKeys(), this)
     }
 }

@@ -1,5 +1,6 @@
 package com.gentlekboy.openweatherapp.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
@@ -14,9 +15,9 @@ class OpenWeatherViewModel @Inject constructor(
     private val repositoryInterface: RepositoryInterface
 ) : ViewModel() {
 
-    fun saveDataToDb(apiKey: String) {
+    fun saveDataToDb(apiKey: String, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryInterface.saveAllResponsesToDb(apiKey)
+            repositoryInterface.saveAllResponsesToDb(apiKey, context)
         }
     }
 
