@@ -1,6 +1,8 @@
 package com.gentlekboy.openweatherapp.utils.clickinterface
 
+import com.gentlekboy.openweatherapp.data.model.cityresponse.CityResponse
+
 interface RecyclerviewClickInterface {
-    fun navigateToCityDetails(position: Int)
-    fun setAsFavourite(position: Int)
+    fun navigateToCityDetails(currentCity: CityResponse)
+    fun setAsFavourite(currentCity: CityResponse)
 }
