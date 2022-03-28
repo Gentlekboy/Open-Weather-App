@@ -13,7 +13,7 @@ interface CityResponseDao {
     @Query("SELECT coord FROM city_response_table")
     fun fetchAllCoordinates(): List<Coord>
 
-    @Query("SELECT * FROM city_response_table")
+    @Query("SELECT * FROM city_response_table ORDER BY isFavourite DESC")
     fun getCityResponseLiveData(): LiveData<List<CityResponse>>
 
     @Update
