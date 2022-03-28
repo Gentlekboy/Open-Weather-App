@@ -30,6 +30,7 @@ class TopCityAdapter(
     )
 
     override fun onBindViewHolder(holder: TopCityViewHolder, position: Int) {
+        val currentCity = oldTopCityList[position]
         with(holder) {
             with(oldTopCityList[position]) {
                 with(binding) {
@@ -43,13 +44,11 @@ class TopCityAdapter(
                     }
 
                     favouriteIcon.setOnClickListener {
-                        recyclerviewClickInterface.setAsFavourite(
-                            position
-                        )
+                        recyclerviewClickInterface.setAsFavourite(currentCity)
                     }
                 }
                 itemView.setOnClickListener {
-                    recyclerviewClickInterface.navigateToCityDetails(position)
+                    recyclerviewClickInterface.navigateToCityDetails(currentCity)
                 }
             }
         }
