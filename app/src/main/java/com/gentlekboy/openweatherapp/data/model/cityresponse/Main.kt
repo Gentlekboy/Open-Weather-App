@@ -16,7 +16,7 @@ data class Main(
     @Json(name = "pressure")
     var pressure: Int? = null,
     @Json(name = "temp")
-    var temp: Double? = null,
+    var temp: Double,
     @Json(name = "temp_max")
     var tempMax: Double? = null,
     @Json(name = "temp_min")
